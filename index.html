@@ -529,7 +529,7 @@
 <script>
   // ── CONFIGURAÇÃO ──────────────────────────────────────────
   // Cole aqui a URL do seu Google Apps Script depois de publicar
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6yVqTOp7tScCNVhLJFatbNzxUlsWD9i5oJdY1GAmRNQmLi27tFw4HyRawIFZXDdtIRw/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnDIzcxilkAnS4Vl8K-bwssdlLBfKv-TtnwAyy5TJvjgW7cY_GHuY0XVT8JjCn0DT0Ow/exec';
   // ─────────────────────────────────────────────────────────
 
   let tipo = null, cor = null, corte = null, tam = null, qtd = 1, bordado = '';
@@ -732,25 +732,12 @@
     document.getElementById('nome').value = '';
     mostrarConfirmacao(nome, itensCopia);
 
-    // envia via iframe invisível (mais confiável com Apps Script)
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = SCRIPT_URL;
-    form.target = 'iframe-envio';
-    form.style.display = 'none';
-
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'data';
-    input.value = JSON.stringify(payload);
-    form.appendChild(input);
-
-    const iframe = document.createElement('iframe');
-    iframe.name = 'iframe-envio';
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    document.body.appendChild(form);
-    form.submit();
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {});
   }
 
   function mostrarConfirmacao(nome, itensPedido) {
