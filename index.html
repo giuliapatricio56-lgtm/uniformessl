@@ -582,6 +582,7 @@
     cor = null; corte = null; tam = null; qtd = 1;
     document.getElementById('qtd-num').textContent = '1';
     ['step-cor','step-corte','step-tam','step-qtd','step-bordado'].forEach(hide);
+    document.getElementById('bordado').value = '';
     renderTamanhosNormal();
     document.querySelectorAll('#step-cor .opt-btn, #step-corte .opt-btn, #step-tam .opt-btn').forEach(b => b.classList.remove('selected'));
     if (tipo === 'puffer') {
@@ -601,7 +602,8 @@
     cor = btn.dataset.cor;
     corte = null; tam = null;
     document.querySelectorAll('#step-corte .opt-btn, #step-tam .opt-btn').forEach(b => b.classList.remove('selected'));
-    ['step-tam','step-qtd'].forEach(hide);
+    ['step-tam','step-qtd','step-bordado'].forEach(hide);
+    document.getElementById('bordado').value = '';
     show('step-corte');
   }
 
@@ -650,8 +652,8 @@
       return;
     }
     erroEl.style.display = 'none';
-    bordado = document.getElementById('bordado').value.trim().toUpperCase();
-    itens.push({ tipo: tipoLabel(tipo), cor, corte, tam, qtd, preco: tipoPreco(tipo), bordado });
+    const nomeBordado = document.getElementById('bordado').value.trim().toUpperCase();
+    itens.push({ tipo: tipoLabel(tipo), cor, corte, tam, qtd, preco: tipoPreco(tipo), bordado: nomeBordado });
     renderLista();
     resetItem();
   }
@@ -661,6 +663,7 @@
     document.getElementById('bordado').value = '';
     document.querySelectorAll('#card-lista ~ .card .opt-btn, .card .opt-btn').forEach(b => b.classList.remove('selected'));
     ['step-cor','step-corte','step-tam','step-qtd','step-bordado'].forEach(hide);
+    document.getElementById('bordado').value = '';
     renderTamanhosNormal();
     document.getElementById('qtd-num').textContent = '1';
     // reset visual de todos os opt-btn do card de adicionar
